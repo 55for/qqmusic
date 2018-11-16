@@ -1,7 +1,7 @@
 # qqmusic
 qqmusic
    
-模仿QQ音乐UI做的一款简洁版的音乐APP 
+模仿QQ音乐UI做的一款简洁版的音乐APP   
 <a href="https://github.com/sanlisanlisanli/qqmusic/tree/master/app/release">APK下载</a>   
   
   
@@ -9,7 +9,7 @@ qqmusic
    
 截图
    
- 首页，带轮播图
+ 首页，带轮播图   
 <img src="https://github.com/sanlisanlisanli/qqmusic/blob/master/imgs/01.jpg" width="260" height="480"/>   
    
      
