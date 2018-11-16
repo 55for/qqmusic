@@ -94,14 +94,15 @@ public class PlayingPopWindow extends PopupWindow{
 
         class ViewHolder extends RecyclerView.ViewHolder{
             LinearLayout contentLl;
-            TextView nameTv;
-            TextView singerTv;
+            TextView nameTv,singerTv;
+            ImageView loveIv;
 
             public ViewHolder(View itemView) {
                 super(itemView);
                 this.contentLl =itemView.findViewById(R.id.palybar_list_item_ll);
                 this.nameTv =itemView.findViewById(R.id.palybar_list_item_name_tv);
                 this.singerTv =itemView.findViewById(R.id.palybar_list_item_singer_tv);
+                this.loveIv=itemView.findViewById(R.id.item_rv_love);
             }
         }
 
@@ -120,14 +121,18 @@ public class PlayingPopWindow extends PopupWindow{
         public void onBindViewHolder(final ViewHolder holder,final int position) {
             final MusicInfo musicInfo = musicInfoList.get(position);
             holder.nameTv.setText(musicInfo.getName());
-            holder.singerTv.setText("-"+musicInfo.getSinger());
-
+            holder.singerTv.setText(musicInfo.getSinger());
             if (musicInfo.getId() == MusicUtil.getIntShared(Constant.KEY_ID)){
                 holder.nameTv.setTextColor(activity.getResources().getColor(R.color.colorAccent));
                 holder.singerTv.setTextColor(activity.getResources().getColor(R.color.colorAccent));
             }else {
                 holder.nameTv.setTextColor(activity.getResources().getColor(R.color.accent_text));
                 holder.singerTv.setTextColor(activity.getResources().getColor(R.color.accent_text));
+            }
+            if (manager.isMusicFavor(musicInfo.getId())){
+                holder.loveIv.setImageResource(R.drawable.love_red);
+            }else {
+                holder.loveIv.setImageResource(R.drawable.love_white);
             }
 
             holder.contentLl.setOnClickListener(new View.OnClickListener() {
@@ -140,6 +145,18 @@ public class PlayingPopWindow extends PopupWindow{
                     activity.sendBroadcast(intent);
                     MusicUtil.setShared(Constant.KEY_ID,musicInfo.getId());
                     notifyDataSetChanged();
+                }
+            });
+            holder.loveIv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (manager.isMusicFavor(musicInfo.getId())){
+                        holder.loveIv.setImageResource(R.drawable.love_white);
+                        manager.removeMyLove(musicInfo.getId());
+                    }else {
+                        holder.loveIv.setImageResource(R.drawable.love_red);
+                        manager.setMyLove(musicInfo.getId());
+                    }
                 }
             });
 
